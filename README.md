@@ -32,12 +32,13 @@ Leads (bookings, contact, newsletter, popup, review feedback, review-link clicks
 
 ## Receiving leads
 
-Set env vars in Vercel → Project → Settings → Environment Variables (see `.env.example`):
+Set env vars in Vercel → Project → Settings → Environment Variables (see `.env.example`). No email addresses are hard-coded.
 
-- `RESEND_API_KEY` + `LEAD_NOTIFY_EMAIL` (+ `LEAD_FROM_EMAIL` on a verified domain) → email per lead
-- `LEAD_WEBHOOK_URL` → JSON POST to Google Sheets (Apps Script), Zapier, Make, n8n or your CRM
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` (+ optional `SMTP_USE_TLS`, `SMTP_FROM_EMAIL`, `SMTP_FROM_NAME`) → the ALFA Stays mailbox that sends emails
+- `LEAD_NOTIFY_EMAIL` → inbox(es) that receive every booking request, enquiry and feedback (comma-separated)
+- `LEAD_WEBHOOK_URL` → optional JSON POST to Google Sheets (Apps Script), Zapier, Make, n8n or your CRM
 
-Without either, leads are only printed in Vercel → Logs.
+With SMTP set, the team gets a branded notification (with *WhatsApp guest* / *Reply* buttons) and the guest gets a confirmation email. Without SMTP or a webhook, leads are only printed in Vercel → Logs.
 
 ### Google Sheets in 2 minutes
 Sheet → Extensions → Apps Script, paste, Deploy → Web app (access: Anyone), copy URL into `LEAD_WEBHOOK_URL`:
